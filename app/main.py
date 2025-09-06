@@ -1,9 +1,9 @@
 from fastapi import FastAPI
+from app.presentation.api.routers.accounts import router as accounts_router
 
-app = FastAPI()
+def create_app() -> FastAPI:
+    app = FastAPI(title="api banking")
+    app.include_router(accounts_router)
+    return app
 
-@app.get("/")
-def read_root():
-    return {"message": "API de Finanzas Personales funcionando"}
-
-# Para iniciar el servidor: uvicorn app.main:app --reload
+app = create_app()
