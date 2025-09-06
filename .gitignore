@@ -1,0 +1,35 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --- Entorno virtual ---
+venv/
+.env
+*.env
+
+# --- Logs ---
+*.log
+
+# --- Archivos temporales ---
+*.tmp
+*.swp
+*.bak
+*.DS_Store
+
+# --- Tests ---
+.pytest_cache/
+.coverage
+htmlcov/
+
+# --- Paquetes / dependencias ---
+*.egg-info/
+dist/
+build/
+
+# --- IDEs ---
+.vscode/
+.idea/
+
+# --- Configuración / Infraestructura ---
+*.pid
