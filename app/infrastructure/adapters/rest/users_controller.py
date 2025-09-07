@@ -7,18 +7,12 @@ from app.application.use_cases.get_user import GetUser
 
 from app.domain.exceptions import NotFoundError, ConflictError
 
-from app.infrastructure.db.sqlalchemy_setup import SessionLocal
+from app.infrastructure.utils.common import get_session
 from app.infrastructure.repositories.sqlalchemy_user_repository import SQLAlchemyUserRepository
 
 router = APIRouter(prefix="/users", tags=["Users"])
 
-# deps
-def get_session():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+get_session()
 
 def get_repo(session: Session = Depends(get_session)) -> SQLAlchemyUserRepository:
     return SQLAlchemyUserRepository(session)
