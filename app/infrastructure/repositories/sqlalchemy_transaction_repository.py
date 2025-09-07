@@ -1,5 +1,4 @@
 # app/infrastructure/repositories/sqlalchemy_transaction_repository.py
-
 from typing import Optional
 from decimal import Decimal
 from sqlalchemy.orm import Session
@@ -8,16 +7,14 @@ from app.domain.entities.transaction import Transaction
 from app.domain.ports.transaction_repository import TransactionRepository
 from app.infrastructure.db.models import TransactionORM
 
-
 def _to_domain(row: TransactionORM) -> Transaction:
     return Transaction(
         id=row.id,
         account_id=row.account_id,
         category_id=row.category_id,
-        amount=Decimal(str(row.amount)),  # evita errores binarios de float
+        amount=Decimal(row.amount),
         description=row.description,
     )
-
 
 class SQLAlchemyTransactionRepository(TransactionRepository):
     def __init__(self, session: Session):
@@ -27,7 +24,7 @@ class SQLAlchemyTransactionRepository(TransactionRepository):
         row = TransactionORM(
             account_id=transaction.account_id,
             category_id=transaction.category_id,
-            amount=float(transaction.amount),  # si migras a Numeric, elimina el cast
+            amount=Decimal(transaction.amount),
             description=transaction.description,
         )
         self._session.add(row)
