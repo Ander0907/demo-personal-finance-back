@@ -3,6 +3,8 @@ from __future__ import annotations
 from datetime import datetime
 from decimal import Decimal
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from typing import Optional
+
 from sqlalchemy import (
     String,
     Integer,
@@ -54,15 +56,29 @@ class AccountORM(Base):
         back_populates="account", cascade="all, delete-orphan"
     )
 
+#version ander, cambio el OPTIONAL
+# class TransactionORM(Base):
+#     __tablename__ = "transactions"
+#     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+#     account_id: Mapped[int] = mapped_column(ForeignKey("accounts.id", ondelete="CASCADE"), nullable=False, index=True)
+#     category_id: Mapped[int] = mapped_column(ForeignKey("transaction_categories.id", ondelete="RESTRICT"), nullable=False, index=True)
+#     amount: Mapped[Decimal] = mapped_column(Numeric(18, 2), nullable=False)
+#     description: Mapped[str | None] = mapped_column(String(255), nullable=True)
+#     created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.utcnow)
+#     transfer_id: Mapped[str | None] = mapped_column(String(36), nullable=True, index=True)
+
+#     account: Mapped["AccountORM"] = relationship(back_populates="transactions")
+#     category: Mapped["TransactionCategoryORM"] = relationship(back_populates="transactions")
+
 class TransactionORM(Base):
     __tablename__ = "transactions"
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     account_id: Mapped[int] = mapped_column(ForeignKey("accounts.id", ondelete="CASCADE"), nullable=False, index=True)
     category_id: Mapped[int] = mapped_column(ForeignKey("transaction_categories.id", ondelete="RESTRICT"), nullable=False, index=True)
     amount: Mapped[Decimal] = mapped_column(Numeric(18, 2), nullable=False)
-    description: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    description: Mapped[Optional[str]]  = mapped_column(String(255), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=datetime.utcnow)
-    transfer_id: Mapped[str | None] = mapped_column(String(36), nullable=True, index=True)
+    transfer_id: Mapped[Optional[str]]  = mapped_column(String(36), nullable=True, index=True)
 
     account: Mapped["AccountORM"] = relationship(back_populates="transactions")
     category: Mapped["TransactionCategoryORM"] = relationship(back_populates="transactions")

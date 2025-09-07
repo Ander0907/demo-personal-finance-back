@@ -10,4 +10,4 @@ class GetTransaction:
         self._repo = repo
 
     def execute(self, *, transaction_id: int) -> Optional[Transaction]:
-        return self._repo.get_by_id(transaction_id)
+        return self._repo.get_transaction_by_id(transaction_id)
