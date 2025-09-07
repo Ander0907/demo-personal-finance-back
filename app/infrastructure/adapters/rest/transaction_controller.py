@@ -9,14 +9,16 @@ from app.infrastructure.utils.common import get_session
 from app.infrastructure.repositories.sqlalchemy_transaction_repository import (
     SQLAlchemyTransactionRepository,
 )
+from app.infrastructure.repositories.sqlalchemy_account_repository import SQLAlchemyAccountRepository
 
 router = APIRouter(prefix="/transactions", tags=["Transactions"])
 
 get_session()
 
 def get_create_uc(session: Session = Depends(get_session)) -> CreateTransaction:
-    repo = SQLAlchemyTransactionRepository(session)
-    return CreateTransaction(repo)
+    tx_repo = SQLAlchemyTransactionRepository(session)
+    acc_repo = SQLAlchemyAccountRepository(session)
+    return CreateTransaction(tx_repo, acc_repo)
 
 @router.post("", response_model=TransactionOut, status_code=status.HTTP_200_OK)
 def create_transaction(payload: CreateTransactionIn, create_uc: CreateTransaction = Depends(get_create_uc)):
