@@ -7,4 +7,4 @@ DB_URL = f"sqlite:///{BASE_DIR / 'finzance.sqlite3'}"
 
 engine = create_engine(DB_URL, echo=False, future=True)
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False, future=True)
-Base = declarative_base()
+Base = declarative_base()  

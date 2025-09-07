@@ -1,6 +1,5 @@
-from pydantic import BaseModel, Field, condecimal
+from pydantic import BaseModel, Field, ConfigDict
 from datetime import datetime
-from typing import Optional
 
 class AccountCreateIn(BaseModel):
         user_id: int = Field(ge=1)
@@ -11,3 +10,5 @@ class AccountOut(BaseModel):
     user_id: int
     balance: float
     created_at: datetime
+
+model_config = ConfigDict(from_attributes=True)
