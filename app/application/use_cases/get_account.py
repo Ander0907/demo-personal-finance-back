@@ -9,7 +9,6 @@ class GetAccount:
 
     def execute(self, account_id: int) -> AccountOut:
         acc = self.repo.get_account_by_id(account_id)
-        if acc is None:                            # más explícito
+        if acc is None:
             raise NotFoundError("Account not found")
-        # Si usas Pydantic v2, asegúrate de permitir atributos:
         return AccountOut.model_validate(acc, from_attributes=True)

@@ -7,4 +7,4 @@ class ListTransactionCategories:
         self._repo = repo
 
     def execute(self) -> Iterable[TransactionCategory]:
-        return self._repo.list_all()
+        return self._repo.list_all_transaction_categories()

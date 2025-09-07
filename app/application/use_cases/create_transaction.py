@@ -33,5 +33,5 @@ class CreateTransaction:
             amount=amount,
             description=description,
         )
-        created = self._repo.add(tx)
+        created = self._repo.add_transaction(tx)
         return created

@@ -23,14 +23,12 @@ def get_create_uc(repo: SQLAlchemyUserRepository = Depends(get_repo)) -> CreateU
 def get_get_uc(repo: SQLAlchemyUserRepository = Depends(get_repo)) -> GetUser:
     return GetUser(repo)
 
-# endpoints
 @router.post("", response_model=UserOut, status_code=status.HTTP_201_CREATED)
 def create_user(payload: UserCreateIn, uc: CreateUser = Depends(get_create_uc)):
     try:
         return uc.execute(payload)
     except ConflictError as e:
         raise HTTPException(status_code=409, detail=str(e))
-
 
 @router.get("/{user_id}", response_model=UserOut)
 def get_user(user_id: int, uc: GetUser = Depends(get_get_uc)):

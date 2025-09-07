@@ -15,6 +15,4 @@ class UserOut(BaseModel):
     email: str
     activo: bool
     created_at: datetime
-
-    # Pydantic v2: permite construir desde la entidad (dataclass)
     model_config = ConfigDict(from_attributes=True)

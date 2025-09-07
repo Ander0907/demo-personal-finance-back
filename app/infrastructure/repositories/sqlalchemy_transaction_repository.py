@@ -1,4 +1,3 @@
-# app/infrastructure/repositories/sqlalchemy_transaction_repository.py
 from typing import Optional
 from decimal import Decimal
 from sqlalchemy.orm import Session
@@ -20,7 +19,7 @@ class SQLAlchemyTransactionRepository(TransactionRepository):
     def __init__(self, session: Session):
         self._session = session
 
-    def add(self, transaction: Transaction) -> Transaction:
+    def add_transaction(self, transaction: Transaction) -> Transaction:
         row = TransactionORM(
             account_id=transaction.account_id,
             category_id=transaction.category_id,
@@ -32,7 +31,7 @@ class SQLAlchemyTransactionRepository(TransactionRepository):
         self._session.refresh(row)
         return _to_domain(row)
 
-    def get_by_id(self, transaction_id: int) -> Optional[Transaction]:
+    def get_transaction_by_id(self, transaction_id: int) -> Optional[Transaction]:
         row = (
             self._session.query(TransactionORM)
             .filter_by(id=transaction_id)

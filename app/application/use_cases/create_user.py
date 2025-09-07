@@ -17,4 +17,4 @@ class CreateUser:
             activo=data.activo,
         )
         saved = self.repo.add(entity)
-        return UserOut.model_validate(saved)  # from_attributes=True en el modelo
+        return UserOut.model_validate(saved)
