@@ -8,19 +8,14 @@ from app.application.dto.transaction_category_dto import (
 from app.application.use_cases.create_transaction_category import CreateTransactionCategory
 from app.application.use_cases.list_transaction_categories import ListTransactionCategories
 from app.domain.entities.transaction_category import TransactionCategory
-from app.infrastructure.db.sqlalchemy_setup import SessionLocal
+from app.infrastructure.utils.common import get_session
 from app.infrastructure.repositories.sqlalchemy_transaction_category_repository import (
-    SQLAlchemyTransactionCategoryRepository,
+    SQLAlchemyTransactionCategoryRepository
 )
 
 router = APIRouter(prefix="/transaction-categories", tags=["Transaction Categories"])
 
-def get_session():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+get_session()
 
 def get_create_uc(session: Session = Depends(get_session)) -> CreateTransactionCategory:
     repo = SQLAlchemyTransactionCategoryRepository(session)

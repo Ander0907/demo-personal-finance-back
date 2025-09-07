@@ -9,18 +9,13 @@ from app.domain.exceptions import NotFoundError
 
 from app.infrastructure.db.sqlalchemy_setup import SessionLocal
 from app.infrastructure.repositories.sqlalchemy_account_repository import SQLAlchemyAccountRepository
+from app.infrastructure.utils.common import get_session
 
 router = APIRouter(prefix="/accounts", tags=["Accounts"])
 
 # --- deps ---
 #Crea una Session por request: db = SessionLocal().
-def get_session():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
+get_session()
 #Declara que depende de get_session: FastAPI primero llamará a get_session y te pasará la Session.
 #Devuelve un repositorio concreto conectado a esa sesión.
 def get_repo(session: Session = Depends(get_session)) -> SQLAlchemyAccountRepository:
